@@ -13,6 +13,7 @@ body {
   list-style-type: none;
   box-sizing: border-box;
   outline: none;
+  font-family: 'Inter', system-ui;
 }
 
 a {
@@ -26,6 +27,97 @@ a {
   max-width: 1080px;
   margin: 50px auto;
 }
+
+
+// overlay
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.drawer {
+  position: absolute;
+  width: 420px;
+  height: 100%;
+  right: 0;
+  background-color: #FFFFFF;
+  box-shadow: -10px 4px 24px rgba(0, 0, 0, 0.1);
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+}
+
+.items {
+  flex: 1;
+  overflow: auto;
+}
+
+.cartItem {
+  border: 1px solid #f3f3f3;
+  border-radius: 20px;
+  overflow: hidden;
+  padding: 10px 10px;
+}
+
+.removeBtn {
+  opacity: 0.5;
+  cursor: pointer;
+  transition: opacity .2s ease-in-out;
+
+  &:hover {
+    opacity: 1;
+  }
+}
+
+.cartTotalBlock {
+  li {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    margin-bottom: 20px;
+  }
+  div {
+    flex: 1;
+    height: 1px;
+    border-bottom: 1px dashed #dfdfdf;
+  }
+  .greenButton {
+    margin-top: 10px;
+    width: 100%;
+    height: 55px;
+    background-color: #9DD558;
+    border-radius: 18px;
+    border: 1px solid #9DD558;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all .15s ease-in-out;
+    position: relative;
+
+    &:hover {
+      background-color: #638933;
+      img {
+        transform: translateX(5px);
+      }
+    }
+
+    img {
+      position: absolute;
+      right: 30px;
+      top: 20px;
+      // transform: translateY(-50%);
+      transition: all .2s ease-in-out;
+    }
+  }
+}
+// overlay
+
 
 header {
   border-bottom: 1px solid #eaeaea;
@@ -48,6 +140,17 @@ header {
   padding: 30px;
   width: 220px;
   border-radius: 40px;
+  transition: box-shadow .2s ease-in-out, transform .2s ease-in-out;
+
+  &:hover {
+    box-shadow: 0px 14px 30px rgba(0, 0, 0, 0.05);
+    transform: translateY(-5px);
+  }
+
+  .favorite {
+    position: absolute;
+    cursor: pointer;
+  }
 
   p {
     font-weight: 400;
@@ -75,4 +178,21 @@ header {
   width: 32px;
   height: 32px;
   cursor: pointer;
+}
+
+.search-block {
+  border: 1px solid #f3f3f3;
+  border-radius: 10px;
+  padding: 0 15px;
+
+  input {
+    border: none;
+    padding: 13px;
+    font-size: 16px;
+    width: 200px;
+
+    &:focus {
+      outline: none;
+    }
+  }
 }
