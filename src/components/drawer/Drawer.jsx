@@ -2,22 +2,26 @@ import React from 'react';
 
 import './drawer.scss';
 
-const Drawer = () => {
+const Drawer = ({ onCloseCart, items = [] }) => {
   return (
-    <div style={{display: 'none'}} className="overlay">
+    <div className="overlay">
       <div className="drawer">
         <h2 className="mb-30 d-flex justify-between align-center">
-          Basket<img className="removeBtn" src="/img/btn-remove.svg" alt="Remove" />
+          Basket<img onClick={onCloseCart} className="removeBtn" src="/img/btn-remove.svg" alt="Remove" />
         </h2>
         <div className="items">
-          <div className="cartItem d-flex align-center mb-20">
-            <img className="mr-15" width={70} height={70} src="/img/sneakers/1.jpg" alt="" />
-            <div className="mr-20">
-              <p className="mb-10">Мужские Кроссовки Nike Air Max 270</p>
-              <p><b>12 999 руб.</b></p>
-            </div>
-            <img className="removeBtn" src="/img/btn-remove.svg" alt="Remove" />
-          </div>
+          {
+            items.map((obj) => (
+              <div className="cartItem d-flex align-center mb-20">
+                <img className="mr-15" width={70} height={70} src={obj.imageUrl} alt="" />
+                <div className="mr-20 item-text">
+                  <p className="mb-10">{obj.title}</p>
+                  <p><b>$ {obj.price}</b></p>
+                </div>
+                <img className="removeBtn" src="/img/btn-remove.svg" alt="Remove" />
+              </div>
+            ))
+          }
         </div>
         <div className="cartTotalBlock">
           <ul>

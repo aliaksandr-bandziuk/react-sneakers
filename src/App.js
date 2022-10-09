@@ -1,30 +1,33 @@
+import React, { useState, useEffect } from "react";
+
 import Card from "./components/card/Card";
 import Header from "./components/header/Header";
 import Drawer from "./components/drawer/Drawer";
 
-const cardsData = [
-  {
-    imageUrl: '/img/sneakers/1.jpg',
-    title: 'Nike Blazer Mid Suede Green',
-    price: 120
-  },
-  {
-    imageUrl: '/img/sneakers/2.jpg',
-    title: 'Nike Air Max 270',
-    price: 122
-  },
-  {
-    imageUrl: '/img/sneakers/3.jpg',
-    title: 'Nike Blazer Mid Suede White',
-    price: 84
-  }
-];
-
 function App() {
+
+  const [items, setItems] = useState([]);
+
+  useEffect(() => {
+    fetch('https://634299963f83935a7845ad4c.mockapi.io/items')
+    .then((res) => res.json())
+    .then((data) => setItems(data));
+  }, []);
+
+  const [cardOpened, setCardOpened] = useState(false);
+
+  const [cartItems, setCartItems] = useState([]);
+
+  const onAddToCart = (obj) => {
+    setCartItems(prev => [...prev, obj]);
+  }
+
+  console.log(cartItems);
+
   return (
     <div className="wrapper">
-      <Drawer />
-      <Header />
+      {cardOpened ? <Drawer items={cartItems} onCloseCart={() => setCardOpened(false)} /> : null}
+      <Header onClickCart={() => setCardOpened(true)} />
       <div className="content p-40">
         <div className="d-flex justify-between align-center mb-30">
           <h1>All Sneakers</h1>
@@ -35,11 +38,13 @@ function App() {
         </div>
         <div className="d-flex flex-wrap cards">
           {
-            cardsData.map((obj) => (
+            items.map((obj) => (
               <Card 
                 imageUrl={obj.imageUrl}
                 title={obj.title}
                 price={obj.price}
+                onFavorite={() => console.log('Added to favorite')}
+                onPlus={(obj) => onAddToCart(obj)}
               />
             ))
           }
