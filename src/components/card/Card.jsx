@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import ContentLoader from "react-content-loader";
 
 import './card.scss';
 
@@ -10,13 +11,14 @@ const Card = ({
                 onFavorite, 
                 onPlus,
                 favorited = false, 
-                onRemove 
+                added = false,
+                loading = false
               }) => {
 
-  const [isAdded, setIsAdded] = useState(false);
+  const [isAdded, setIsAdded] = useState(added);
 
   const onClickPlus = () => {
-    onPlus({ imageUrl, title, price });
+    onPlus({ id, imageUrl, title, price });
     setIsAdded(!isAdded);
   }
 
@@ -31,30 +33,52 @@ const Card = ({
 
   return (
     <div className="card">
-      <div className="favorite">
-        <img
-          onClick={onClickFavorite}
-          src={
-            isFavorite ? "/img/heart-liked.svg"
-            :
-            "/img/heart-unliked.svg"}
-            alt="favorite"
-        />
-      </div>
-      <img width={133} height={112} src={imageUrl} alt="" />
-      <p>{title}</p>
-      <div className="d-flex justify-between align-center">
-        <div className="d-flex flex-column">
-          <span>Cost: </span>
-          <b>$ {price}</b>
-        </div>
-          <img
-            onClick={onClickPlus}
-            className='plus'
-            src={isAdded ? "/img/btn-checked.svg" : "/img/btn-plus.svg"}
-            alt="" 
-          />
-      </div>
+      {
+        loading ? (
+          <ContentLoader
+            speed={2}
+            width={155}
+            height={250}
+            viewBox="0 0 155 265"
+            backgroundColor="#f3f3f3"
+            foregroundColor="#ecebeb"
+            // {...props}
+          >
+            <rect x="0" y="0" rx="10" ry="10" width="155" height="140" />
+            <rect x="0" y="167" rx="5" ry="5" width="155" height="15" />
+            <rect x="0" y="187" rx="5" ry="5" width="100" height="15" />
+            <rect x="0" y="234" rx="5" ry="5" width="80" height="25" />
+            <rect x="124" y="230" rx="10" ry="10" width="32" height="32" />
+          </ContentLoader>
+        ) : (
+          <>
+            <div className="favorite">
+              <img
+                onClick={onClickFavorite}
+                src={
+                  isFavorite ? "/img/heart-liked.svg"
+                  :
+                  "/img/heart-unliked.svg"}
+                  alt="favorite"
+              />
+            </div>
+            <img width={133} height={112} src={imageUrl} alt="" />
+            <p>{title}</p>
+            <div className="d-flex justify-between align-center">
+              <div className="d-flex flex-column">
+                <span>Cost: </span>
+                <b>$ {price}</b>
+              </div>
+                <img
+                  onClick={onClickPlus}
+                  className='plus'
+                  src={isAdded ? "/img/btn-checked.svg" : "/img/btn-plus.svg"}
+                  alt="" 
+                />
+            </div>
+          </>
+        )
+      }
     </div>
   )
 }
